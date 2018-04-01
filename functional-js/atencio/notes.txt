@@ -1,0 +1,3 @@
+from Functional Programming in JavaScript
+by Luis Atencio
+ISBN: 9781617292828
