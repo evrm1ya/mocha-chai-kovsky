@@ -49,3 +49,18 @@ function findDuplicate(ary) {
 }
 
 console.log(findDuplicate(nums));
+
+function findDuplicate2(ary) {
+  let frequency = {}
+  let max = ary.length
+
+  for (let i = 0; i < max; i++) {
+    if (frequency[ary[i]]) {
+      return ary[i]
+    }
+
+    frequency[ary[i]] = 1
+  }
+}
+
+console.log(findDuplicate2(nums))
