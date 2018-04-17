@@ -226,6 +226,24 @@ class BST {
   }
 
   breadthFirst() {
+    // could use a queue instead
+    let listOfNodes = []
+    let traversalQueue = [this.rootNode]
+
+    while (traversalQueue.length) {
+      let node = traversalQueue.shift()
+      listOfNodes.push(node.data)
+
+      if (node.leftChild) {
+        traversalQueue.push(node.leftChild)
+      }
+
+      if (node.rightChild) {
+        traversalQueue.push(node.rightChild)
+      }
+    }
+
+    return listOfNodes
 
   }
 }
@@ -242,3 +260,4 @@ for (let i = 0; i < 10; i++) {
 console.log(tree.inorder())
 console.log(tree.preorder())
 console.log(tree.postorder())
+console.log(tree.breadthFirst())
