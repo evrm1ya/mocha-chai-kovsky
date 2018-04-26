@@ -1,56 +1,49 @@
-function partition(ary, firstIndex, lastIndex) {
-  var pivot = ary[firstIndex]
-  var pivotIndex = firstIndex
-  var indexOfLastElement = lastIndex
-
-  // position of last element in list which is
-  // where we begin the search for the element
-  // that is less than the pivot
-  var lessThanPivotIndex = indexOfLastElement
-
-  // position where we begin to look for element in array
-  // that is greater than the pivot
-  var greaterThanPivotIndex = firstIndex + 1
-
-  while (true) {
-    while (ary[greaterThanPivotIndex] < pivot &&
-      greaterThanPivotIndex < lastIndex) {
-
-      greaterThanPivotIndex++
-    }
-
-    while (ary[lessThanPivotIndex] > pivot &&
-      lessThanPivotIndex >= firstIndex) {
-
-      lessThanPivotIndex--
-    }
-
-    if (greaterThanPivotIndex < lessThanPivotIndex) {
-      let temp = ary[greaterThanPivotIndex]
-
-      // swap item at gtIndex with item at ltIndex
-      ary[greaterThanPivotIndex] = ary[lessThanPivotIndex]
-      ary[lessThanPivotIndex] = temp
-    } else {
-      break
-    }
-  }
-
-  // exchange item at pivotIndex with item at ltIndex
-  ary[pivotIndex] = ary[lessThanPivotIndex]
-  ary[lessThanPivotIndex] = pivot
-
-  return lessThanPivotIndex;
+function swap(items, firstIndex, secondIndex) {
+  let temp = items[firstIndex];
+  items[firstIndex] = items[secondIndex];
+  items[secondIndex] = temp;
 }
 
-function quickSort(ary, first, last) {
-  if (last - first <= 0) {
-    return
-  } else {
-    partitionPoint = partition(ary, first, last)
-    quickSort(ary, first, partitionPoint - 1)
-    quickSort(ary, partitionPoint + 1, last)
+function partition(items, left, right) {
+  let pivot = items[Math.floor((right + left) / 2)];
+  let i = left;
+  let j = right;
+
+  while (i <= j) {
+    while (items[i] < pivot) {
+      i++;
+    }
+
+    while (items[j] > pivot) {
+      j--;
+    }
+
+    if (i <= j) {
+      swap(items, i, j);
+      i++;
+      j--;
+    }
   }
+
+  return i;
+}
+
+function quickSort(items, left, right) {
+  let index;
+
+  if (items.length > 1) {
+    index = partition(items, left, right);
+
+    if (left < index - 1) {
+      quickSort(items, left, index - 1);
+    }
+
+    if (index < right) {
+      quickSort(items, index, right);
+    }
+  }
+
+  return items;
 }
 
 let arr1 = [43, 3, 77, 89, 4, 20]
