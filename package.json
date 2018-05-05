@@ -17,8 +17,10 @@
     "accounting": "^0.4.1",
     "immutable": "^3.8.1",
     "lodash": "^4.17.2",
+    "mkdirp": "^0.5.1",
     "normalizr": "^3.2.3",
-    "ramda": "^0.23.0"
+    "ramda": "^0.23.0",
+    "request": "^2.85.0"
   },
   "devDependencies": {
     "babel-plugin-ramda": "^1.2.0",
