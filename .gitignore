@@ -1,3 +1,4 @@
 .DS_Store
 .vscode/
 node_modules/
+patterns/async-control-flow-with-callbacks/results/
