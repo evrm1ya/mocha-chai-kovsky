@@ -20,7 +20,8 @@
     "mkdirp": "^0.5.1",
     "normalizr": "^3.2.3",
     "ramda": "^0.23.0",
-    "request": "^2.85.0"
+    "request": "^2.85.0",
+    "slug": "^0.9.1"
   },
   "devDependencies": {
     "babel-plugin-ramda": "^1.2.0",
