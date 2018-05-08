@@ -1,8 +1,9 @@
 const fs = require('fs');
 const download = require('./download');
 const LinkScraper = require('./LinkScraper');
-
+const TaskQueue = require('./TaskQueue');
 const linkScraper = new LinkScraper();
+const downloadQueue = new TaskQueue(2);
 
 function spiderLinks(currentUrl, body, nesting, callback) {
   if (nesting === 0) {
@@ -18,19 +19,21 @@ function spiderLinks(currentUrl, body, nesting, callback) {
   let completed = 0;
   let hasErrors = false;
 
-  function done(err) {
-    if (err) {
-      hasErrors = true;
-      return callback(err);
-    }
+  links.forEach(link => {
+    downloadQueue.pushTask(done => {
+      spider(link, nesting - 1, err => {
+        if (err) {
+          hasErrors = true;
+          return callback(err);
+        }
 
-    if (++completed === links.length && !hasErrors) {
-      return callback();
-    }
-  }
+        if (++completed === links.length && !hasErrors) {
+          callback();
+        }
 
-  links.forEach(function(link) {
-    spider(link, nesting - 1, done);
+        done();
+      });
+    });
   });
 }
 
@@ -56,7 +59,7 @@ function spider(url, nesting, callback) {
   });
 }
 
-spider(process.argv[2], process.argv[3], (err) => {
+spider(process.argv[2], process.argv[3], err => {
   if (err) {
     console.log(err);
     process.exit();

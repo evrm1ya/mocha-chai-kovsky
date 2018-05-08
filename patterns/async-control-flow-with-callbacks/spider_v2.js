@@ -1,50 +1,14 @@
-const request = require('request');
 const fs = require('fs');
-const mkdirp = require('mkdirp');
-const path = require('path');
-const utilities = require('./utilities');
+const download = require('./download');
 const LinkScraper = require('./LinkScraper');
-
 const linkScraper = new LinkScraper();
-
-function saveFile(filename, contents, callback) {
-  mkdirp(path.dirname(filename), err => {
-    if (err) {
-      return callback(err);
-    }
-
-    fs.writeFile(filename, contents, callback);
-  });
-}
-
-function download(url, filename, callback) {
-  console.log(`Downloading ${url}`);
-
-  request(url, (err, response, body) => {
-    if (err) {
-      return callback(err);
-    }
-
-    saveFile(filename, body, err => {
-      if (err) {
-        return callback(err);
-      }
-
-      console.log(`Downloaded and saved: ${url}`);
-
-      callback(null, body);
-    });
-  });
-}
 
 function spiderLinks(currentUrl, body, nesting, callback) {
   if (nesting === 0) {
     return process.nextTick(callback);
   }
 
-
   let links = linkScraper.getPageLinks(currentUrl, body);
-  //let links = utilities.getPageLinks(currentUrl, body);
 
   function iterate(index) {
     if (index === links.length) {
@@ -67,7 +31,7 @@ function spiderLinks(currentUrl, body, nesting, callback) {
 let spiderCount = 0;
 
 function spider(url, nesting, callback) {
-  const filename = utilities.urlToFilename(url);
+  const filename = linkScraper.urlToFilename(url);
   spiderCount++;
 
   fs.readFile(filename, 'utf8', (err, body) => {
@@ -89,7 +53,7 @@ function spider(url, nesting, callback) {
   });
 }
 
-spider(process.argv[3], Number(process.argv[2]), err => {
+spider(process.argv[2], Number(process.argv[3]), err => {
   console.log(spiderCount);
   if (err) {
     console.log(err);
