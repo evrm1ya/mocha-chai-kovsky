@@ -3,3 +3,5 @@
 node_modules/
 patterns/async/results/
 patterns/streams/datasets/
+patterns/decorator/db/
+patterns/adapter/fsDB/
