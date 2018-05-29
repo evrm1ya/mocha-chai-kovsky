@@ -4,7 +4,7 @@ function insertionSort(ary) {
   console.log('Start:')
   console.log(ary)
 
-  for (let i = 1; i < ary.length; i++) {
+  for (let i = 1; i < max; i++) {
     let insertValue = ary[i]
     let searchIndex = i
 
@@ -18,7 +18,7 @@ function insertionSort(ary) {
     console.log(ary)
   }
 
-  return ary 
+  return ary
 }
 
 const ary1 = [5, 1, 100, 2, 10]
